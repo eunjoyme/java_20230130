@@ -41,16 +41,16 @@ public class Main3 {
 		sc.close();
 		
 		//정수형
-		int a1=13;
-		long a2=13L;
+		//int a1=13;
+		//long a2=13L;
 		
 		//실수형
-		float a3= 3.14f;
+		//float a3= 3.14f;
 		//float avg = sum/ 3.0f;
-		double a4= 2.45d;
+		//double a4= 2.45d;
 		
 		//문자형
-		char a5= 'c';
+		//char a5= 'c';
 	}
 
 }
