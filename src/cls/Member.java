@@ -14,7 +14,6 @@ public class Member {
 		Date useDate = null;  //
 		
 		
-		
 		//메소드, 함수
 		// 1. Main4에서 사용할 수 있다. public
 		// 2. 반환타입(String) 문자로 반환해야 함.
