@@ -11,7 +11,6 @@ public class StudentFrame extends JFrame{
 	private JTextField textField_1;
 	private JTextField textField_2;
 	public StudentFrame() {
-		textArea.setText("학생등록");
 		getContentPane().setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("학번");

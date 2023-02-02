@@ -4,6 +4,16 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+//변수 타입 정수형, 실수형, 문자, 논리형.. 직접생성하고자 하는 클래스
+//조건문 전체 데이터에서 내가 필요한 정보를 추출(필터)
+//반복문 명령어를 여러번 수행. 배열의 데이터를 탐색하기 위한 용도.
+
+//배열은 변수를 여러개 일관적으로 만듬.(반복문)
+//private Book[]books =new Book[5];//책
+
+//클래스, 상속, 정적클래스... 제너릭클래스...
+//컬렉션 가변배열 개수가 자동적으로 바뀜
+
 @Getter
 @Setter
 @ToString
