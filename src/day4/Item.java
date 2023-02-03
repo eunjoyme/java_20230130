@@ -51,10 +51,10 @@ public class Item {
 	//ex)가나다 => 다나가(0 1 2) 3 
 	public String revName(){
 		int i=0;
-		String ret = " "; //문자를 누적할 변수
+		String ret = ""; //문자를 누적할 변수
 		for(i=this.name.length()-1; i>=0; i-- ) {
 			char tmp = this.name.charAt(i);
-			ret =ret +tmp;
+			ret =ret+tmp;
 		}
 		return ret;
 	}
