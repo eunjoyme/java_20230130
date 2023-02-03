@@ -1,3 +1,13 @@
+//1.mongodb  (nosqlbooster 다운)
+//데이터베이스의 주소: 1.234.5.158 <= 도메인 ihongss.com
+//포트번호 : 37017
+//데이터베이스: db200 ex)db213
+//아이디 : id200    ex)id213
+//암호 : pw200     ex)pw213
+//mongodb://아이디:암호@서버주소:포트번호/DB명
+
+//-------------------------------------
+
 package day5;
 
 import java.util.ArrayList;
