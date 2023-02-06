@@ -16,6 +16,7 @@ public class Item {
 	private int price = 0;              //물품가격
 	private int quantity = 0;           //수량
 	private Date regdate = new Date();  //등록일
+	
 	private Member memberid = null;     //판매자
 	
 	//수량이 n개 미만이면 n개로 변경하는 메소드
