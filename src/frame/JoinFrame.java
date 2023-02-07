@@ -77,7 +77,7 @@ public class JoinFrame extends JDialog {
 		getContentPane().add(chckbxNewCheckBox);
 		
 		JCheckBox chckbxNewCheckBox_1 = new JCheckBox("구매자");
-		chckbxNewCheckBox_1.setBounds(253, 225, 61, 23);
+		chckbxNewCheckBox_1.setBounds(253, 225, 77, 23);
 		getContentPane().add(chckbxNewCheckBox_1);
 		
 		JLabel lblNewLabel_6 = new JLabel("등록일자");

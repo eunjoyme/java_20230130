@@ -34,6 +34,10 @@ import javax.swing.JMenuItem;
 			mnNewMenu.add(mntmNewMenuItem_2);
 			
 			JMenuItem mntmNewMenuItem_3 = new JMenuItem("New menu item");
+			mntmNewMenuItem_3.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
 			mnNewMenu.add(mntmNewMenuItem_3);
 			
 			JMenu mnNewMenu_1 = new JMenu("교수용");

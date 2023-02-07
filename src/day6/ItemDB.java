@@ -1,7 +1,5 @@
 package day6;
 
-import java.util.Date;
-
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
@@ -15,8 +13,6 @@ import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.InsertOneResult;
 import com.mongodb.client.result.UpdateResult;
-
-import day6.Item;
 
 public class ItemDB {
 	private MongoCollection<Document> collection = null;

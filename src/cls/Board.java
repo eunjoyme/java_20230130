@@ -27,13 +27,11 @@ public class Board {
 	//toString으로 만드세요.
 	//Main5 생성한 다음 게시글 1개를 적절한 내용으로 추가한 후 출력하기
 	
-	
-	private long brdNo = 0L;
-	private String brdTitle = "";
-	private String brdContent = "";
-	private String brdWriter = "";
-	private long brdHit = 0L;  
-	private Date brdDate = null;
-	
+	private long brdNo = 0L;        //글번호
+	private String brdTitle = "";   //글제목
+	private String brdContent = ""; //글내용
+	private String brdWriter = "";  //작성자
+	private long brdHit = 0L;       //조회수
+	private Date brdDate = null;    //등록일자
 	
 }
