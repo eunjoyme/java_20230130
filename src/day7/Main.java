@@ -11,42 +11,43 @@ public class Main {
 		BoardDAO obj = new BoardDAOImpl();
 		
 		//조회수가 hit보다 이하 출력하기.
-		obj.selectBoardHitList(120);
+//		obj.selectBoardHitList(90);
 		
 		// 목록으로 전송됨. 목록은 반드시 반복문을 사용해서 1개씩 출력
-		List<Board> list = obj.selectBoardList();
+//		List<Board> list = obj.selectBoardList();
 		
 		//list의 값을 1개씩 꺼내서 one변수 보관하는 방식
-		for(Board one : list ) {
-			System.out.println(one.getBrdNo() + "," + one.getBrdTitle()
-			+ "," + one.getBrdHit() + "," + one.getBrdWriter()
-			+ "," + one.getBrdDate() );
-		}
+//		for(Board one : list ) {
+//			System.out.println(one.getBrdNo() + "," + one.getBrdTitle()
+//			+ "," + one.getBrdHit() + "," + one.getBrdWriter()
+//			+ "," + one.getBrdDate() );
+//		}
 		//배열의 위치를 이용하여 출력하는 방식
-		for(int i=0; i<list.size(); i++) {
-			Board one = list.get(i);
-			System.out.println(one.getBrdNo() + "," + one.getBrdTitle()
-			+ "," + one.getBrdHit() + "," + one.getBrdWriter()
-			+ "," + one.getBrdDate() );
-		}
+//		for(int i=0; i<list.size(); i++) {
+//			Board one = list.get(i);
+//			System.out.println(one.getBrdNo() + "," + one.getBrdTitle()
+//			+ "," + one.getBrdHit() + "," + one.getBrdWriter()
+//			+ "," + one.getBrdDate() );
+//		}
 		
 		//조회
-		Board brd = obj.selectBoardOne(3);
-		System.out.println(brd.toString() );
+//		Board brd = obj.selectBoardOne(4);
+//		System.out.println(brd.toString() );
 		
 		//수정
-		Board board = new Board();
-		board.setBrdNo(4);
-		board.setBrdTitle("코딩교육");
-		board.setBrdContent("이빨 나감");
-		board.setBrdWriter("성주아가");
-		obj.updateBoard(board);
+//		Board board = new Board();
+//		board.setBrdNo(4);
+//		board.setBrdTitle("코딩교육");
+//		board.setBrdContent("이빨 나감");
+//		board.setBrdWriter("성주아가");
+//		board.setBrdHit(80L);
+//		System.out.println(obj.updateBoard(board));
 		
 		//삭제
-//		int ret = obj.deleteBoard(1);
+//		int ret = obj.deleteBoard(7);
 //		System.out.println(ret);
 		
-		//고객이 입력한 내용에 해당
+		//고객이 입력한 내용에 해당(출력)
 //		Board board = new Board();
 //		board.setBrdTitle("제목");
 //		board.setBrdContent("내용");

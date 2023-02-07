@@ -22,3 +22,5 @@ public interface BoardDAO {
 	//게시글 1개 조회
 	public Board selectBoardOne(long no );
 }
+
+

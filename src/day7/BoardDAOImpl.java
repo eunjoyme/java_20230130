@@ -79,7 +79,6 @@ public class BoardDAOImpl implements BoardDAO {
 			e.printStackTrace();
 			return -1; // 실행되지 못할 경우 -1, 치명적 오류, 시스템 오류 등...
 		}
-
 	}
 
 	// 글번호와 제목,내용,작성자를 전송하면 해당글번호의 제목,내용,작성작를 변경하기
@@ -91,8 +90,9 @@ public class BoardDAOImpl implements BoardDAO {
 			Bson update1 = Updates.set("title", board.getBrdTitle());
 			Bson update2 = Updates.set("content", board.getBrdContent());
 			Bson update3 = Updates.set("writer", board.getBrdWriter());
+			Bson update4 = Updates.set("hit", board.getBrdHit());
 
-			Bson update = Updates.combine(update1, update2, update3);
+			Bson update = Updates.combine(update1, update2, update3, update4);
 
 			UpdateResult result = this.boardColl.updateOne(filter, update);
 			System.out.println(result.toString());
