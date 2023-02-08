@@ -81,7 +81,7 @@ public class BoardDAOImpl implements BoardDAO {
 		}
 	}
 
-	// 글번호와 제목,내용,작성자를 전송하면 해당글번호의 제목,내용,작성작를 변경하기
+	// 글번호와 제목,내용,작성자를 전송하면 해당글번호의 제목,내용,작성자를 수정/변경하기
 	@Override
 	public int updateBoard(Board board) {
 		try {
