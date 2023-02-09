@@ -3,6 +3,9 @@ package day7;
 
 import java.util.List;
 
+import day9.BoardDAO;
+import day9.BoardDAOImpl;
+
 public class Main {
 
 	public static void main(String[] args) {

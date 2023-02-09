@@ -1,12 +1,13 @@
 package day8;
 
+import day8.frame.BookInsertFrame;
 import day8.frame.BookSelectListPageFrame;
 
 public class Main {
 
 	//화면을 실행시키는 역할
 	public static void main(String[] args) {
-//		new BookInsertFrame();
+		new BookInsertFrame();
 //		new BookSelectListFrame();
 		new BookSelectListPageFrame();
 		
@@ -23,10 +24,10 @@ public class Main {
 		
 		//수정
 //		Book book = new Book();
-//		book.setNo(126);
-//		book.setTitle("사과");
-//		book.setAuthor("김은정");
-//		book.setPrice(20000);
+//		book.setNo(107);
+//		book.setTitle("바보");
+//		book.setAuthor("이동준");
+//		book.setPrice(200);
 //		book.setCate('B');
 //		System.out.println(obj.updateBook(book));
 		

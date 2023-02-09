@@ -1,4 +1,4 @@
-package day7;
+package day9;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,21 +18,23 @@ import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.InsertOneResult;
 import com.mongodb.client.result.UpdateResult;
 
-public class BoardDAOImpl implements BoardDAO {
+import day8.Config;
 
-	final String URL = "mongodb://id224:pw224@1.234.5.158:37017/db224";
+public class BoardDAOImpl implements BoardDAO {
 
 	private MongoCollection<Document> boardColl = null; // boards
 	private MongoCollection<Document> seqColl = null; // sequence
-
+	private MongoCollection<Document> replies = null; //sequence
+	
 	public BoardDAOImpl() {
 		try {
 			// 설계도면 객체 = 클래스명.정적메소드()
 			// 정적메소드는 객체가 1개만 생성되기 때문에 리소스 낭비가 없음.
-			MongoClient client = MongoClients.create(URL);
+			MongoClient client = MongoClients.create(Config.URL);
 			if (client != null) {
-				this.boardColl = client.getDatabase("db224").getCollection("boards");
-				this.seqColl = client.getDatabase("db224").getCollection("sequence");
+				this.boardColl = client.getDatabase(Config.DBNAME).getCollection("boards");
+				this.seqColl = client.getDatabase(Config.DBNAME).getCollection("sequence");
+				this.replies = client.getDatabase(Config.DBNAME).getCollection(Config.REPLYCOL);
 				System.out.println("DB접속 성공시점");
 			}
 		} catch (Exception e) {
@@ -134,7 +136,7 @@ public class BoardDAOImpl implements BoardDAO {
 			Bson sort = Filters.eq("_id", -1);
 
 			// MongoCursor<Document> == ArrayList<Document>
-			MongoCursor<Document> docs = this.boardColl.find().sort(sort).cursor();
+			MongoCursor<Document> docs = this.boardColl.find().sort(sort).iterator();
 			while (docs.hasNext()) { // docs에 꺼낼 요소가 존재하나요?
 				Document doc = docs.next(); // 1개 꺼내기(전체 개수 1감소했음)
 				Board board = new Board();
@@ -144,6 +146,20 @@ public class BoardDAOImpl implements BoardDAO {
 				board.setBrdWriter(doc.getString("writer"));
 				board.setBrdHit(doc.getLong("hit"));
 				board.setBrdDate(doc.getDate("date"));
+				
+				//****여기서 글번호를 이용하여 답글개수를 구해서
+				Bson filter = Filters.eq("board", doc.getLong("_id") );
+				long replyCount = this.replies.countDocuments(filter );
+				board.setReplyCount(replyCount);
+				
+				//게시글을 이용하여 해당 답글을 목록을 받아옴.
+				FindIterable<Document>replyDocs = this.replies.find(filter);
+				List<Long>replyList = new ArrayList<>();
+				for(Document tmp : replyDocs ) {
+					replyList.add(tmp.getLong("_id"));
+				}
+				board.setReplyNoList(replyList);
+				
 				// Document => Board 복사
 				list.add(board);
 			}
@@ -198,4 +214,34 @@ public class BoardDAOImpl implements BoardDAO {
 		}
 	}
 
+	//댓글의 개수가 n개 이상인 게시글 조회
+	@Override
+	public List<Board> selectBoardReplyCount(int n ) {
+		try {
+			//1.전체 게시글을 가져옴.
+			FindIterable<Document>list = this.boardColl.find();
+
+			//2.반복한다.
+			List<Board>retList = new ArrayList<Board>();
+			for(Document doc : list) {
+				//3. 게시글 번호를 이용해서 답글의 개수를 구한다. 
+				Bson filter = Filters.eq("board", doc.getLong("_id") );
+				long replyCount = this.replies.countDocuments(filter );
+				if(replyCount >= n) { //답글의 개수가 전달받는 n보다 크다면
+					Board board = new Board(); //board객체를 만든다. 
+					board.setBrdNo(doc.getLong("_id"));
+					board.setBrdTitle(doc.getString("title"));
+					board.setBrdContent(doc.getString("content"));
+					board.setBrdWriter(doc.getString("writer"));
+					board.setBrdHit(doc.getLong("hit"));
+					board.setBrdDate(doc.getDate("date"));
+					retList.add(board);  //리스트에 추가한다. 
+				}
+			}
+			return retList;  // if에 필터된 항목으로 구성된 retList를 반환한다. 
+		}catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 }

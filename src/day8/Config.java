@@ -13,8 +13,13 @@ public class Config {
 	//게시글의 숫자를 10개
 	public static final int BOARDMAX = 10;
 	
-	
 	//데이터베이스 명칭
 	public static final String DBNAME = "db224";
+	
+	//답글 컬렉션 명칭
+	public static final String REPLYCOL = "replies";
+	
+	//시퀀스용 컬렉션 명칭(테이블)
+	public static final String RESEQUNCECOL = "sequence";
 	
 }
