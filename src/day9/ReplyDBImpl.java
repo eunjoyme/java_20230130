@@ -30,7 +30,7 @@ public class ReplyDBImpl implements ReplyDB{
 		try {
 			MongoClient client = MongoClients.create(Config.URL);
 			MongoDatabase db = client.getDatabase(Config.DBNAME);
-			sequence = db.getCollection(Config.RESEQUNCECOL);
+			sequence = db.getCollection(Config.RESEQUENCECOL);
 			replies = db.getCollection(Config.REPLYCOL);
 		}
 		catch (Exception e) {
