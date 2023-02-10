@@ -96,25 +96,49 @@ public class AddressDBImpl implements AddressDB{
 		}
 	}
 
-	//1개 멤버
+	// 목록에도 회원정보 전달
 	@Override
 	public List<Address> selectAddressList(Member member) {
 		try {
-		FindIterable<Document>docs = this.addresses.find(Filters.eq("memberid", member.getId()) );
-		List<Address>list =new ArrayList<>();
-		for(Document doc : docs) {
-			list.add(documentToAddress(doc));
-		}
-		if(!list.isEmpty()) {
+			List<Address> list = new ArrayList<Address>();
+			//주소에서 member로 전달되는 해당아이디 주소만 목록 조회
+			Bson filter = Filters.eq("memberid", member.getId() );
+			FindIterable<Document>docs = this.addresses.find(filter);
+			for(Document doc : docs) {
+				//회원에서 아이디가 일치하는 정보 가져오기
+				Bson filter1= Filters.eq("_id", member.getId());
+				Document doc1 = this.members.find(filter1).first();
+				System.out.println(doc);
+				System.out.println(doc1);
+				
+				//회원정보는 아직없음
+				Address address = documentToAddress(doc);
+				//set을 이용해서 address객체에 회원정보 추가
+				address.setMemberid(documentToMember(doc1));
+				list.add(address);
+			}
 			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
 		}
-		return null;
-	} catch (Exception e) {
-		e.printStackTrace();
-		return null;
-	}
 }
-	//Document -> Address 로 변경하느 메소드
+			//Document -> Member 로 변경하는 메소드없을때 쓰는 법
+//		FindIterable<Document>docs = this.addresses.find(Filters.eq("memberid", member.getId()) );
+//		List<Address>list =new ArrayList<>();
+//		for(Document doc : docs) {
+//			list.add(documentToAddress(doc));
+//		}
+//		if(!list.isEmpty()) {
+//			return list;
+//		}
+//		return null;
+//	} catch (Exception e) {
+//		e.printStackTrace();
+//		return null;
+//	}
+//}
+	//Document -> Address 로 변경하는 메소드
 	private Address documentToAddress(Document doc) {
 		Address address = new Address();
 		address.setCode(doc.getLong("_id"));
@@ -122,6 +146,19 @@ public class AddressDBImpl implements AddressDB{
 		address.setPostcode(doc.getString("postcode"));
 		address.setRegdate(doc.getDate("regdate"));
 		return address;
+	}
+	
+	//Document -> Member 로 변경하는 메소드
+	private Member documentToMember(Document doc) {
+		Member member = new Member();
+		member.setId(doc.getString("_id"));
+		member.setPassword(doc.getString("password"));
+		member.setName(doc.getString("name"));
+		member.setPhone(doc.getString("phone"));
+		member.setRole(doc.getString("role"));
+		member.setAge(doc.getInteger("age"));
+		member.setRegdate(doc.getDate("regdate"));
+		return member;
 	}
 	
 	@Override
