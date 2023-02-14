@@ -1,11 +1,19 @@
 package day11;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import org.bson.Document;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.result.InsertManyResult;
+
+import day8.Config;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -15,9 +23,11 @@ public class RestTitanic {
 
 	final String URL = "https://raw.githubusercontent.com/AISPUBLISHING/dsfs-python/master/titanic.json";
 	private String data = null;
+	private MongoCollection<Document>titanicCollection = null;
 	
 	public RestTitanic() {
 		try {
+			//rest 데이터 가져오기
 			OkHttpClient client = new OkHttpClient();
 			Request request = new Request.Builder().url(URL).get().build();
 			Response response = client.newCall(request).execute();
@@ -26,6 +36,12 @@ public class RestTitanic {
 				this.data = response.body().string().toString();
 				System.out.println("확인용 => "+ this.data);
 			}	
+			
+			//데이터베이스 접속하기
+			MongoClient dbClient = MongoClients.create(Config.URL);
+			this.titanicCollection = dbClient.getDatabase(Config.DBNAME).getCollection(Config.TITANICCOL);
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -51,7 +67,7 @@ public class RestTitanic {
 			titanic.setSurvived("_");
 			titanic.setEmbarked("_");
 			titanic.setTicket("_");
-			titanic.setPassengerId(0);
+			titanic.setPassengerid(0);
 			titanic.setSibsp(0);
 			
 			//데이터가 있으면 데이터 변경.
@@ -74,13 +90,13 @@ public class RestTitanic {
 				titanic.setSex(jobj.getString("sex"));
 			}
 			if(!jobj.isNull("survived")) {
-				String tmp = jobj.getString("survived");
+				titanic.setSurvived(jobj.getString("survived"));
 			}
 			if(!jobj.isNull("ticket")) {
 				titanic.setTicket(jobj.getString("ticket"));
 			}
-			if(!jobj.isNull("passengerId")) {
-				titanic.setPassengerId(jobj.getInt("passengerId"));
+			if(!jobj.isNull("passengerid")) {
+				titanic.setPassengerid(jobj.getInt("passengerid"));
 			}
 			if(!jobj.isNull("sibsp")) {
 				titanic.setSibsp(jobj.getInt("sibsp"));
@@ -88,42 +104,35 @@ public class RestTitanic {
 			
 			list.add(titanic);
 			
-//			if( !jobj.isNull("survived")) {
-//				String tmp = jobj.getString("survived");
-//				if(tmp.equals("yes")) {
-//					titanic.setSurvived("1");
-//				}
-//			}
-//			else(tmp)
-//			
-//			titanic.setAge(0.0f);
-//			
-//			if(jobj.isNull("age")) {
-//				System.out.println("나이정보 없음, 기본값 0으로 초기화");
-//			}
-//			else {
-//				System.out.println(jobj.getFloat("age"));
-//			}
-//			
-//			if(jobj.isNull("cabin")) {
-//				System.out.println("객실번호 없음, 기본값 0으로 초기화");
-//			}
-//			else {
-//				System.out.println(jobj.getString("cabin"));
-//			}
-//			
-//			if(jobj.isNull("embarked")) {
-//				System.out.println("탑승한 곳(항구) 정보없음, 기본값 0으로 초기화");
-//			}
-//			else {
-//				System.out.println(jobj.getString("embarked"));
-//			}
-//			System.out.println("------------------------------");
 		}
 		return list; //임시로 null리턴 변경해야 함!!!
 	}
 		
 	public void saveMongoDB() {
+		List<Titanic>list = this.parseData();
 		
+		//List<Titanic> => List<Document>
+		List<Document> saveList = new ArrayList<Document>();
+		for(Titanic tmp : list) {
+			Document doc = new Document();
+			doc.append("embarked", tmp.getEmbarked());
+			doc.append("age", tmp.getAge());
+			doc.append("parch", tmp.getParch());
+			doc.append("cabin", tmp.getCabin());
+			doc.append("pclass", tmp.getPclass());
+			doc.append("sex", tmp.getSex());
+			doc.append("survived", tmp.getSurvived());
+			doc.append("ticket", tmp.getTicket());
+			doc.append("passengerid", tmp.getPassengerid());
+			doc.append("sibsp", tmp.getSibsp());
+			doc.append("fare", tmp.getFare());
+			doc.append("name", tmp.getName());
+			doc.append("regdate", new Date());
+			
+			saveList.add(doc);
+		}
+		
+		InsertManyResult result = this.titanicCollection.insertMany(saveList);
+		System.out.println(result);
 	}
 }
