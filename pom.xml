@@ -62,6 +62,12 @@
 		<version>3.10.0</version>
 	</dependency>
 
+	<!-- mqtt-->
+	<dependency>
+		<groupId>org.eclipse.paho</groupId>
+		<artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+		<version>1.2.5</version>
+	</dependency>
+	
   </dependencies>
-  
 </project>

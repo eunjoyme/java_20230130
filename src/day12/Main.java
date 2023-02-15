@@ -14,8 +14,6 @@ public class Main {
 		print.printAgeSurvived(tDB.selectTitanicList() );
 		
 		
-		
-		
 		//1)전체 출력하기
 //		RestTitanic obj = new RestTitanic();
 //		obj.saveMongoDB();

@@ -132,31 +132,103 @@ public class Print {
 	public void printAgeSurvived(List<Titanic> list) {
 		// 연령대별 인원수를 구하고, 연령대별 생존자수 구하기
 		// 생존자수/전체인원*100
-		Iterator<Titanic> iter = list.iterator();
-		int[] cnt = { 0, 0, 0, 0, 0, 0, 0, 0,0 };
-		int[] cnt1 = { 0, 0, 0, 0, 0, 0, 0, 0,0 };
-		int i = 0;
-		while (iter.hasNext()) {
-			Titanic t = iter.next();
-			if (t.getAge() > 0) {
-				int n = t.getAge().intValue() / 10; // 0.01~9 => 0, 10~19=> 1
-				cnt[n]++;
-				System.out.println(cnt[n]);
-				if (t.getSurvived().equalsIgnoreCase("Yes")) {
-					cnt1[n]++;
-				}
-				
-			}
-			if(t.getAge() > 90) {
-				break;
-			}
-		}
+		int cnt1[] = { 0,0,0,0,0,0,0,0,0};
+		int cnt2[] = { 0,0,0,0,0,0,0,0,0};
 		
-		for (i = 0; i < cnt.length; i++) {
-			System.out.println(i * 10 + "대 생존자수 => " + cnt[i]);
+		for(Titanic t : list) {
+			if(t.getAge()>0 && t.getAge()<10) {
+				cnt1[0]++;
+				if(t.getSurvived().equalsIgnoreCase("yes")) {
+					cnt2[0]++;
+				}
+			}
+			else if(t.getAge()<20) {
+				cnt1[1]++;
+				if(t.getSurvived().equalsIgnoreCase("yes")) {
+					cnt2[1]++;
+				}
+			}
+			else if(t.getAge()<30) {
+				cnt1[2]++;
+				if(t.getSurvived().equalsIgnoreCase("yes")) {
+					cnt2[2]++;
+				}
+			}
+			else if(t.getAge()<40) {
+				cnt1[3]++;
+				if(t.getSurvived().equalsIgnoreCase("yes")) {
+					cnt2[3]++;
+				}
+			}
+			else if(t.getAge()<50) {
+				cnt1[4]++;
+				if(t.getSurvived().equalsIgnoreCase("yes")) {
+					cnt2[4]++;
+				}
+			}
+			else if(t.getAge()<60) {
+				cnt1[5]++;
+				if(t.getSurvived().equalsIgnoreCase("yes")) {
+					cnt2[5]++;
+				}
+			}
+			else if(t.getAge()<70) {
+				cnt1[6]++;
+				if(t.getSurvived().equalsIgnoreCase("yes")) {
+					cnt2[6]++;
+				}
+			}
+			else if(t.getAge()<80) {
+				cnt1[7]++;
+				if(t.getSurvived().equalsIgnoreCase("yes")) {
+					cnt2[7]++;
+				}
+			}
+			else if(t.getAge()<90) {
+				cnt1[8]++;
+				if(t.getSurvived().equalsIgnoreCase("yes")) {
+					cnt2[8]++;
+				}
+			}
 		}
+			System.out.println("어린이 생존 인원수 => "+(float)cnt2[0]/cnt1[0]*100);
+			System.out.println("10대 생존 인원수 => "+ (float)cnt2[1]/cnt1[1]*100);
+			System.out.println("20대 생존 인원수 => "+ (float)cnt2[2]/cnt1[2]*100);
+			System.out.println("30대 생존 인원수 => "+ (float)cnt2[3]/cnt1[3]*100);
+			System.out.println("40대 생존 인원수 => "+ (float)cnt2[4]/cnt1[4]*100);
+			System.out.println("50대 생존 인원수 => "+ (float)cnt2[5]/cnt1[5]*100);
+			System.out.println("60대 생존 인원수 => "+ (float)cnt2[6]/cnt1[6]*100);
+			System.out.println("70대 생존 인원수 => "+ (float)cnt2[7]/cnt1[7]*100);
+			System.out.println("80대 생존 인원수 => "+ (float)cnt2[8]/cnt1[8]*100);
+		
 	}
-
+		
+//		Iterator<Titanic> iter = list.iterator();
+//		int[] cnt = { 0, 0, 0, 0, 0, 0, 0, 0,0 };
+//		int[] cnt1 = { 0, 0, 0, 0, 0, 0, 0, 0,0 };
+//		int i = 0;
+//		while (iter.hasNext()) {
+//			Titanic t = iter.next();
+//			if (t.getAge() > 0) {
+//				int n = t.getAge().intValue() / 10; // 0.01~9 => 0, 10~19=> 1
+//				cnt[n]++;
+//				System.out.println(cnt[n]);
+//				if (t.getSurvived().equalsIgnoreCase("Yes")) {
+//					cnt1[n]++;
+//				}
+//				
+//			}
+//			if(t.getAge() > 90) {
+//				break;
+//			}
+//		}
+//		
+//		for (i = 0; i < cnt.length; i++) {
+//			System.out.println(i * 10 + "대 생존자수 => " + cnt[i]);
+//		}
+//	}
+	
+	
 	// 성별 생존자수 구하기(전체인원 891명, 비율은 소수점으로 표시)
 	public void printSexSurvived(List<Titanic> list) {
 		// 1.남여 인원수를 구하기
